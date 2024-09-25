@@ -27,3 +27,12 @@ echo "Pull :git pull origin main";
 
 
 ?>
+
+
+<?php
+
+echo "uiuu dsdsd";
+
+
+
+?>
