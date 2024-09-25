@@ -1,11 +1,47 @@
 <?php
+// Include database connection from config.php
 include 'config.php';
 
-?>
+// Initialize variables for storing error/success messages
+$error = "";
+$success = "";
 
+// Check if form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Capture form data
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
+
+    // Validation: Ensure fields are not empty
+    if (empty($username) || empty($email) || empty($password)) {
+        $error = "All fields are required.";
+    } else {
+        // Check if the email already exists in the database
+        $checkEmailQuery = "SELECT * FROM users WHERE email = '$email'";
+        $result = mysqli_query($conn, $checkEmailQuery);
+
+        if (mysqli_num_rows($result) > 0) {
+            $error = "Email already exists. Please log in.";
+        } else {
+            // Hash the password for security
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+            // Insert new user into the database
+            $insertQuery = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashedPassword')";
+            if (mysqli_query($conn, $insertQuery)) {
+                $success = "Registration successful! You can now log in.";
+            } else {
+                $error = "Error: " . mysqli_error($conn);
+            }
+        }
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +61,7 @@ include 'config.php';
             min-height: 100vh;
         }
 
-        
+
         header {
             background-color: #356698;
             padding: 20px 0;
@@ -62,7 +98,7 @@ include 'config.php';
             background-color: #16a085;
         }
 
-        
+
         .signup-container {
             background-color: #fff;
             padding: 40px;
@@ -79,8 +115,8 @@ include 'config.php';
             font-size: 24px;
         }
 
-        .signup-container input[type="text"], 
-        .signup-container input[type="email"], 
+        .signup-container input[type="text"],
+        .signup-container input[type="email"],
         .signup-container input[type="password"] {
             width: calc(100% - 20px);
             padding: 12px;
@@ -90,11 +126,11 @@ include 'config.php';
             transition: border-color 0.3s ease;
         }
 
-        .signup-container input[type="text"]:hover, 
-        .signup-container input[type="email"]:hover, 
-        .signup-container input[type="password"]:hover, 
-        .signup-container input[type="text"]:focus, 
-        .signup-container input[type="email"]:focus, 
+        .signup-container input[type="text"]:hover,
+        .signup-container input[type="email"]:hover,
+        .signup-container input[type="password"]:hover,
+        .signup-container input[type="text"]:focus,
+        .signup-container input[type="email"]:focus,
         .signup-container input[type="password"]:focus {
             border-color: #1abc9c;
             outline: none;
@@ -131,7 +167,7 @@ include 'config.php';
             color: #16a085;
         }
 
-       
+
         footer {
             text-align: center;
             padding: 20px;
@@ -140,12 +176,12 @@ include 'config.php';
             font-size: 16px;
             box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
         }
-
     </style>
 </head>
+
 <body>
 
-  
+
     <header>
         <h1>TravelQuest</h1>
         <nav>
@@ -162,24 +198,27 @@ include 'config.php';
         </nav>
     </header>
 
-    
+
     <div class="signup-container">
         <h1>Sign Up</h1>
-        <form>
-            <input type="text" placeholder="Username" required><br>
-            <input type="email" placeholder="Email" required><br>
-            <input type="password" placeholder="Password" required><br>
+
+        <form method="POST" action="signup.php">
+            <input type="text" name="username" placeholder="Username" required><br>
+            <input type="email" name="email" placeholder="Email" required><br>
+            <input type="password" name="password" placeholder="Password" required><br>
             <button type="submit">Sign Up</button>
         </form>
+
         <div class="links">
             <a href="#">Already have an account? Log In</a>
         </div>
     </div>
 
-    
+
     <footer>
         <p>&copy; 2024 Tourism Management System</p>
     </footer>
 
 </body>
+
 </html>
