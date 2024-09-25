@@ -1,33 +1,30 @@
 <?php
-// Include database connection from config.php
+
 include 'config.php';
 
-// Initialize variables for storing error/success messages
+
 $error = "";
 $success = "";
 
-// Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Capture form data
+
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-    // Validation: Ensure fields are not empty
+   
     if (empty($username) || empty($email) || empty($password)) {
         $error = "All fields are required.";
     } else {
-        // Check if the email already exists in the database
+        
         $checkEmailQuery = "SELECT * FROM users WHERE email = '$email'";
         $result = mysqli_query($conn, $checkEmailQuery);
 
         if (mysqli_num_rows($result) > 0) {
             $error = "Email already exists. Please log in.";
         } else {
-            // Hash the password for security
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-            // Insert new user into the database
             $insertQuery = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashedPassword')";
             if (mysqli_query($conn, $insertQuery)) {
                 $success = "Registration successful! You can now log in.";

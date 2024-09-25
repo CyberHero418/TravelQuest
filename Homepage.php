@@ -256,7 +256,7 @@
 
                 
                 <li><a href="#weather">Weather</a></li>
-                <li><a href="#admin">Admin</a></li>
+                
             </ul>
         </nav>
     </header>
