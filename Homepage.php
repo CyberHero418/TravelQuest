@@ -13,7 +13,6 @@
             background-color: #f4f4f4;
             color: #333;
         }
-
        
         header {
             background-color: #5096dd;
@@ -93,14 +92,20 @@
             margin: 15px 0;
         }
 
-        .hero-buttons {
+        .hero-buttons{
+            display: flex;
+            justify-content: center; 
+            gap: 20px;
+            margin-top: 30px;
+        }
+        a{
             display: flex;
             justify-content: center; 
             gap: 20px;
             margin-top: 30px;
         }
 
-        .hero-buttons button {
+        .hero-buttons button{
             transform: translate(-5%, -5%);
             text-align: center; 
             padding: 15px 25px;
@@ -112,8 +117,22 @@
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
         }
+        a{
+            transform: translate(-5%, -5%);
+            text-align: center; 
+            padding: 15px 25px;
+            background-color: #07527e;
+            border: none;
+            border-radius: 50px;
+            font-size: 15px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            outline: none;
+            text-decoration: none;   
+        }
 
-        .hero-buttons button:hover {
+        .hero-buttons button:hover, a:hover{
             background-color: #09137b;
             transform: scale(1.05);
         }
@@ -235,10 +254,7 @@
                 <li><a href="#reviews&Enquiry">Reviews and Enquiry</a></li>
                 <li><a href="#payments">Payments</a></li>
 
-                <?php
-                paye
-
-                 ?>
+                
                 <li><a href="#weather">Weather</a></li>
                 <li><a href="#admin">Admin</a></li>
             </ul>
@@ -251,8 +267,8 @@
             <h1>Explore the World with Us</h1>
             <p>Discover amazing destinations, tours, and travel experiences.</p>
             <div class="hero-buttons">
-                <button onclick="showSection('signup')">Sign Up</button>
-                <button onclick="showSection('login')">Login</button>
+                <a href="signup.php" >Sign Up</a>
+                <a href="Login.php" >Login</a>
             </div>
         </div>
     </div>
@@ -307,12 +323,6 @@
     <footer>
         <p>&copy; 2024 Tourism Management System</p>
     </footer>
-
-    <script>
-       function showSection(sectionId) {
-            alert('You clicked ' + sectionId);
-        }
-    </script>
 
 </body>
 </html>
