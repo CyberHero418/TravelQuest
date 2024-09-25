@@ -3,6 +3,10 @@
 include 'config.php';
 
 ?>
+<?php
+echo "Obaida dustho chlyee"
+
+?>
 
 
 
