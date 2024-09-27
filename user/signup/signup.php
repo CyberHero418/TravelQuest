@@ -1,40 +1,3 @@
-<?php
-
-include 'config.php';
-
-
-$error = "";
-$success = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
-
-   
-    if (empty($username) || empty($email) || empty($password)) {
-        $error = "All fields are required.";
-    } else {
-        
-        $checkEmailQuery = "SELECT * FROM users WHERE email = '$email'";
-        $result = mysqli_query($conn, $checkEmailQuery);
-
-        if (mysqli_num_rows($result) > 0) {
-            $error = "Email already exists. Please log in.";
-        } else {
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-            $insertQuery = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashedPassword')";
-            if (mysqli_query($conn, $insertQuery)) {
-                $success = "Registration successful! You can now log in.";
-            } else {
-                $error = "Error: " . mysqli_error($conn);
-            }
-        }
-    }
-}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -199,15 +162,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="signup-container">
         <h1>Sign Up</h1>
 
-        <form method="POST" action="signup.php">
-            <input type="text" name="username" placeholder="Username" required><br>
+        <form method="POST" action="./logic_signup.php">
+            <input type="text" name="name" placeholder="Username" required><br>
             <input type="email" name="email" placeholder="Email" required><br>
             <input type="password" name="password" placeholder="Password" required><br>
             <button type="submit">Sign Up</button>
         </form>
 
         <div class="links">
-            <a href="#">Already have an account? Log In</a>
+            <a href="./Login.php">Already have an account? Log In</a>
         </div>
     </div>
 

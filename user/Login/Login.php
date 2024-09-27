@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -145,36 +146,27 @@
    
     <header>
         <h1>TravelQuest</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#accommodations">Accommodations</a></li>
-                <li><a href="#tours">Tours</a></li>
-                <li><a href="#transport">Transport</a></li>
-                <li><a href="#bookings">Bookings</a></li>
-                <li><a href="#reviews&Enquiry">Reviews and Enquiry</a></li>
-                <li><a href="#payments">Payments</a></li>
-                <li><a href="#admin">Admin</a></li>
-            </ul>
-        </nav>
+
     </header>
 
     
     <div class="login-container">
         <h1>Login</h1>
-        <form>
-            <input type="text" placeholder="Username" required><br>
-            <input type="password" placeholder="Password" required><br>
-            <button type="submit">Log In</button>
-        </form>
+<form method="POST" action="./user_login.php">
+    <input type="text" name="name" placeholder="name" required><br>
+    <input type="password" name="password" placeholder="Password" required><br>
+    <button type="submit">Log In</button>
+</form>
+
         <div class="links">
-            <a href="#">Forgot Password?</a> | <a href="#">Sign Up</a>
+            <a href="#">Forgot Password?</a> | <a href="./signup.php">Sign Up</a>
         </div>
     </div>
 
     
     <footer>
         <p>&copy; 2024 Tourism Management System</p>
+        <li><a href="/admin/">Admin</a></li>
     </footer>
 
 </body>

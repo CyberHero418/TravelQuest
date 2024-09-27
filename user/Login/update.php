@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transport Booking</title>
+    <title>Update Account</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
         
@@ -57,32 +57,31 @@
         }
 
         
-        .booking-container {
+        .update-container {
             background-color: #fff;
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 500px;
+            width: 400px;
             margin: 40px auto;
             text-align: center;
         }
 
-        .booking-container h1 {
+        .update-container h1 {
             margin-bottom: 20px;
             color: #1abc9c;
             font-size: 28px;
         }
 
-        .booking-container form {
+        .update-container form {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .booking-container select, 
-        .booking-container input[type="text"], 
-        .booking-container input[type="date"], 
-        .booking-container input[type="number"] {
+        .update-container input[type="text"], 
+        .update-container input[type="email"], 
+        .update-container input[type="password"] {
             width: calc(100% - 20px);
             padding: 12px;
             margin: 10px 0;
@@ -91,15 +90,17 @@
             transition: border-color 0.3s ease;
         }
 
-        .booking-container input:hover,
-        .booking-container select:hover,
-        .booking-container input:focus,
-        .booking-container select:focus {
+        .update-container input[type="text"]:hover, 
+        .update-container input[type="email"]:hover, 
+        .update-container input[type="password"]:hover, 
+        .update-container input[type="text"]:focus, 
+        .update-container input[type="email"]:focus, 
+        .update-container input[type="password"]:focus {
             border-color: #1abc9c;
             outline: none;
         }
 
-        .booking-container button {
+        .update-container button {
             width: 100%;
             padding: 12px;
             background-color: #1abc9c;
@@ -112,11 +113,22 @@
             transition: background-color 0.3s;
         }
 
-        .booking-container button:hover {
+        .update-container button:hover {
             background-color: #16a085;
         }
 
-        
+        .update-container .links a {
+            color: #1abc9c;
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .update-container .links a:hover {
+            text-decoration: underline;
+        }
+
+       
         footer {
             text-align: center;
             padding: 20px;
@@ -147,39 +159,27 @@
         </nav>
     </header>
 
-  
-    <div class="booking-container">
-        <h1>Book Your Transport</h1>
+    
+    <div class="update-container">
+        <h1>Update Account</h1>
         <form action="#" method="POST">
-            
-            <select name="transport-type" required>
-                <option value="">Select Transport Type</option>
-                <option value="bus">Bus</option>
-                <option value="train">Train</option>
-                <option value="air">Air</option>
-            </select>
-
-            
-            <input type="text" name="departure" placeholder="Departure Location" required>
-
-            
-            <input type="text" name="destination" placeholder="Destination Location" required>
-
-            
-            <input type="date" name="date" placeholder="Travel Date" required>
-
-            
-            <input type="number" name="passengers" placeholder="Number of Passengers" min="1" max="10" required>
-
-            
-            <button type="submit">Book Now</button>
+            <input type="password" name="old-password" placeholder="Old Password" required><br>
+            <input type="text" name="username" placeholder="New Username" required><br>
+            <input type="email" name="email" placeholder="New Email" required><br>
+            <input type="password" name="password" placeholder="New Password" required><br>
+            <button type="submit">Update Account</button>
         </form>
+        <div class="links">
+            <a href="#">Go Back</a>
+        </div>
     </div>
 
-    
+   
     <footer>
         <p>&copy; 2024 Tourism Management System</p>
     </footer>
 
 </body>
 </html>
+
+

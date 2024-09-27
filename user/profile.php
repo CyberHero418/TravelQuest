@@ -2,55 +2,51 @@
 session_start();
 include 'config.php';
 
-if (!isset($_SESSION['username'])) {
-    header("Location: Login.php");
+// Redirect if not logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
     exit();
 }
 
-$username = $_SESSION['username'];
+$user_id = $_SESSION['user_id'];
 
-$sql = "SELECT * FROM users WHERE username = ?";
+// Fetch user details
+$sql = "SELECT * FROM user WHERE user_id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $username);
+$stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['update'])) {
-        $email = $_POST['email'];
-        $name = $_POST['name'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
+    $email = $_POST['email'];
+    $name = $_POST['name'];
+    $imageData = NULL;
 
-        // Handle profile image upload
-        $imagePath = $user['image'];
-        if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
-            $image = $_FILES['image']['name'];
-            $imageTmpPath = $_FILES['image']['tmp_name'];
-            $imageExtension = pathinfo($image, PATHINFO_EXTENSION);
-            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+    // Check if a file has been uploaded without errors
+    if (isset($_FILES['user_pic']) && $_FILES['user_pic']['error'] == UPLOAD_ERR_OK) {
+        $imageTmpPath = $_FILES['user_pic']['tmp_name'];
+        $imageData = file_get_contents($imageTmpPath);  // Convert image to binary data
 
-            if (in_array(strtolower($imageExtension), $allowedExtensions)) {
-                $newFileName = md5(time() . $image) . '.' . $imageExtension;
-                $uploadFileDir = 'uploads/';
-                $imagePath = $uploadFileDir . $newFileName;
-
-                if (move_uploaded_file($imageTmpPath, $imagePath)) {
-                    if ($user['image'] && file_exists($user['image'])) {
-                        unlink($user['image']);
-                    }
-                } else {
-                    echo "Error moving the uploaded file.";
-                }
-            } else {
-                echo "Invalid file type.";
-            }
-        }
-
-        $sql = "UPDATE users SET email = ?, name = ?, image = ? WHERE username = ?";
+        // Update query to include image data
+        $sql = "UPDATE user SET email = ?, name = ?, user_pic = ? WHERE user_id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssss", $email, $name, $imagePath, $username);
+        $null = NULL; // This is required to bind the blob type
+        $stmt->bind_param("ssbi", $email, $name, $null, $user_id);
+        $stmt->send_long_data(2, $imageData); // Sending the binary data
 
         if ($stmt->execute()) {
             echo "<script>alert('Profile updated successfully.');</script>";
+        } else {
+            echo "Error updating record: " . $stmt->error;
+        }
+    } else {
+        // Update without changing the image
+        $sql = "UPDATE user SET email = ?, name = ? WHERE user_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssi", $email, $name, $user_id);
+
+        if ($stmt->execute()) {
+            echo "<script>alert('Profile updated successfully without image update.');</script>";
         } else {
             echo "Error updating record: " . $stmt->error;
         }
@@ -59,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -122,7 +119,7 @@ $conn->close();
             margin-bottom: 30px;
         }
 
-        .profile-image {
+        .profile-user_pic {
             width: 150px;
             height: 150px;
             border-radius: 50%;
@@ -180,28 +177,29 @@ $conn->close();
         <h1>TravelQuest</h1>
         <nav>
             <ul>
-                <li><a href="homepage.php">Home</a></li>
-                <li><a href="#accommodations">Accommodations</a></li>
-                <li><a href="#tours">Tours</a></li>
-                <li><a href="#transport">Transport</a></li>
+                <li><a href="./user_dashboard.php">Home</a></li>
+                <li><a href="./">Accommodations</a></li>
+                <li><a href="">Tours</a></li>
+                <li><a href="./transport.php">Transport</a></li>
                 <li><a href="#bookings">Bookings</a></li>
-                <li><a href="#reviews&Enquiry">Reviews and Enquiry</a></li>
+                <li><a href="./review&enquiry.php">Reviews and Enquiry</a></li>
                 <li><a href="#payments">Payments</a></li>
-                <li><a href="#weather">Weather</a></li>
-                <li><a href="#admin">Admin</a></li>
+                <li><a href="./weather.php">Weather</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- Profile Section -->
     <div class="container">
-        <div class="profile-section">
-            <?php if (isset($user['image']) && $user['image']): ?>
-                <img src="<?php echo htmlspecialchars($user['image']); ?>" alt="Profile Image" class="profile-image">
-            <?php else: ?>
-                <img src="default-profile.png" alt="Default Profile Image" class="profile-image">
-            <?php endif; ?>
-        </div>
+    <div class="profile-section">
+    <?php if (isset($user['user_id'])): ?>
+        <img src="./getImage.php?php echo htmlspecialchars($user['user_id']); ?>" alt="Profile Picture" class="profile-user_pic">
+    <?php else: ?>
+        <img src="path/to/default/image.jpg" alt="Default Profile Picture" class="profile-user_pic">
+    <?php endif; ?>
+</div>
+
+
 
         <form action="profile.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
@@ -213,8 +211,8 @@ $conn->close();
                 <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
             </div>
             <div class="form-group">
-                <label for="image">Profile Image:</label>
-                <input type="file" id="image" name="image" accept="image/*">
+                <label for="user_pic">Profile user_pic:</label>
+                <input type="file" id="user_pic" name="user_pic" accept="user_pic/*">
             </div>
             <div style="text-align: center;">
                 <button type="submit" name="update" class="btn update-btn"><i class="fas fa-user-edit"></i> Update Profile</button>

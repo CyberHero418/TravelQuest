@@ -246,17 +246,14 @@
         <h1>TravelQuest</h1>
         <nav>
             <ul>
-                <li><a href="#home">Home</a></li>
+                <li><a href="./Homepage.php">Home</a></li>
                 <li><a href="#accommodations">Accommodations</a></li>
                 <li><a href="#tours">Tours</a></li>
                 <li><a href="#transport">Transport</a></li>
                 <li><a href="#bookings">Bookings</a></li>
                 <li><a href="#reviews&Enquiry">Reviews and Enquiry</a></li>
                 <li><a href="#payments">Payments</a></li>
-
-                
                 <li><a href="#weather">Weather</a></li>
-                
             </ul>
         </nav>
     </header>
@@ -267,8 +264,8 @@
             <h1>Explore the World with Us</h1>
             <p>Discover amazing destinations, tours, and travel experiences.</p>
             <div class="hero-buttons">
-                <a href="signup.php" >Sign Up</a>
-                <a href="Login.php" >Login</a>
+                <a href="./user/signup/signup.php" >Sign Up</a>
+                <a href="./user/Login/Login.php" >Login</a>
             </div>
         </div>
     </div>

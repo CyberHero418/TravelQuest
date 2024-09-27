@@ -196,14 +196,13 @@
         <h1>TravelQuest</h1>
         <nav>
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#accommodations">Accommodations</a></li>
+                <li><a href="./user_dashboard.php">Home</a></li>
+                <li><a href="">Accommodations</a></li>
                 <li><a href="#tours">Tours</a></li>
-                <li><a href="#transport">Transport</a></li>
-                <li><a href="#bookings">Bookings</a></li>
-                <li><a href="#reviews">Reviews</a></li>
-                <li><a href="#enquiries">Enquiries</a></li>
-                <li><a href="#admin">Admin</a></li>
+                <li><a href="./transport.php">Transport</a></li>
+                <li><a href="./book_status.php">Bookings</a></li>
+                <li><a href="./review&enquiry.php">Reviews</a></li>
+  
             </ul>
         </nav>
     </header>
