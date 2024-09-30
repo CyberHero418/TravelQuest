@@ -170,7 +170,7 @@
             <button type="submit">Update Account</button>
         </form>
         <div class="links">
-            <a href="#">Go Back</a>
+            <a href="../user_dashboard.php">Go Back</a>
         </div>
     </div>
 

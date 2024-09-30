@@ -150,11 +150,12 @@
         <nav>
             <ul>
                 <li><a href="./admin.php">Dashboard</a></li>
-                <li><a href="./manage_users.php">Manage Users</a></li>
+                <!-- <li><a href="./manage_users.php">Manage Users</a></li> -->
                 <li><a href="./manage_accommodations.php">Manage Accommodations</a></li>
                 <li><a href="./manage_tours.php">Manage Tours</a></li>
                 <li><a href="./manage_transport.php">Manage Transport</a></li>
                 <li><a href="./manage_bookings.php">Manage Bookings</a></li>
+               <li><a href="./logout.php">Logout</a></li> 
             </ul>
         </nav>
     </header>

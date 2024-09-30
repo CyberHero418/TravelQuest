@@ -145,16 +145,7 @@
     <header>
         <h1>TravelQuest</h1>
         <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#accommodations">Accommodations</a></li>
-                <li><a href="#tours">Tours</a></li>
-                <li><a href="#transport">Transport</a></li>
-                <li><a href="#bookings">Bookings</a></li>
-                <li><a href="#reviews&Enquiry">Reviews and Enquiry</a></li>
-                <li><a href="#payments">Payments</a></li>
-                <li><a href="#admin">Admin</a></li>
-            </ul>
+ 
         </nav>
     </header>
 
@@ -170,7 +161,7 @@
         </form>
 
         <div class="links">
-            <a href="./Login.php">Already have an account? Log In</a>
+            <a href="../Login/Login.php">Already have an account? Log In</a>
         </div>
     </div>
 

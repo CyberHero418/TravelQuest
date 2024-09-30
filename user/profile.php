@@ -166,6 +166,7 @@ $conn->close();
             background-color: #5096dd;
             color: white;
             font-size: 16px;
+            margin-top: 14%;
             box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
         }
     </style>
@@ -190,14 +191,10 @@ $conn->close();
     </header>
 
     <!-- Profile Section -->
-    <div class="container">
     <div class="profile-section">
-    <?php if (isset($user['user_id'])): ?>
-        <img src="./getImage.php?php echo htmlspecialchars($user['user_id']); ?>" alt="Profile Picture" class="profile-user_pic">
-    <?php else: ?>
-        <img src="path/to/default/image.jpg" alt="Default Profile Picture" class="profile-user_pic">
-    <?php endif; ?>
+    <img id="profile-pic" src="path/to/default/image.jpg" alt="Profile Picture" class="profile-user_pic">
 </div>
+
 
 
 
@@ -226,3 +223,28 @@ $conn->close();
     </footer>
 
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const userId = "<?php echo $user['user_id']; ?>"; // Retrieve the user ID from PHP
+        const profilePic = document.getElementById('profile-pic');
+
+        // URL to fetch the profile picture from your server
+        const imageUrl = `getImage.php?user_id=${userId}`;
+
+        // Create a new Image object
+        const imgLoader = new Image();
+        imgLoader.onload = function () {
+            // If the image loads successfully, display it
+            profilePic.src = imageUrl;
+        };
+
+        imgLoader.onerror = function () {
+            // If the image fails to load, keep the default image or handle the error
+            profilePic.src = "path/to/default/image.jpg"; // Ensure this path is correct
+        };
+
+        // Start loading the image
+        imgLoader.src = imageUrl;
+    });
+</script>
+
