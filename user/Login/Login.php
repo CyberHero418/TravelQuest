@@ -159,14 +159,14 @@
 </form>
 
         <div class="links">
-            <a href="#">Forgot Password?</a> | <a href="./signup.php">Sign Up</a>
+            <a href="#">Forgot Password?</a> | <a href="../signup/signup.php">Sign Up</a>
         </div>
     </div>
 
     
     <footer>
         <p>&copy; 2024 Tourism Management System</p>
-        <li><a href="/admin/">Admin</a></li>
+        <li><a href="../../admin/admin_login.php">Admin</a></li>
     </footer>
 
 </body>

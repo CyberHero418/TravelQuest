@@ -82,7 +82,7 @@
             background-color: #16a085;
         }
         .hero-section {
-            background-image: url('pexels-pixabay-38238.jpg');
+            background-image: url('../pexels-andreimike-1271619.jpg');
             background-attachment: fixed;
             background-position: center;
             background-size: cover;
@@ -106,14 +106,105 @@
             margin: 20px 0 0;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .search-bar input, 
+        .search-bar select, 
+        .search-bar button {
+            padding: 15px;
+            margin: 0 8px;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            outline: none;
+            font-size: 18px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar input {
+            width: 300px;
+        }
+
+        .search-bar select {
+            width: 180px;
+        }
+
+        .search-bar button {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button:hover {
+            background-color: #1f5f8b;
+        }
+
+        
+        .container {
+            width: 85%;
+            margin: 0 auto;
+            margin-bottom: 30px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: #c1cbe9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card h3 {
+            font-size: 22px;
+            margin: 15px 0;
+            color: #34495e;
+        }
+
+        .card p {
+            color: #7f8c8d;
+        }
+
+        .card button {
+            padding: 10px 20px;
+            background-color: #ffffff;
+            color: rgb(12, 21, 39);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .card button:hover {
+            background-color: #229954;
+        }
+
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 10px;
             background-color: #5096dd;
             color: white;
             font-size: 16px;
             box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-            position: fixed;
+    
             bottom: 0;
             width: 100%;
         }
@@ -146,8 +237,56 @@
         <div>
             <h1>Welcome to TravelQuest</h1>
             <p>Explore the world with us</p>
+            
+        </div>
+
+        </div>
+    <div class="search-bar container">
+        <input type="text" placeholder="Search for accommodations, tours, transport...">
+        <select>
+            <option value="">Select Category</option>
+            <option value="accommodations">Accommodations</option>
+            <option value="tours">Tours</option>
+            <option value="transport">Transport</option>
+        </select>
+        <button>Search</button>
+    </div>
+    <div class="container">
+        <h2>Our Services</h2>
+        <div class="card-container">
+            <div class="card">
+                <h3>Group of 4 People</h3>
+                <p>Exclusive accommodation offers for small groups.</p>
+                <button>Book Now</button>
+            </div>
+            <div class="card">
+                <h3>Group of 10 People</h3>
+                <p>Perfect deals for large group bookings.</p>
+                <button>Book Now</button>
+            </div>
+            <div class="card">
+                <h3>Thailand Tours</h3>
+                <p>Explore the beauty of Thailand with our tour packages.</p>
+                <button>Book Now</button>
+            </div>
+            <div class="card">
+                <h3>Singapore Tours</h3>
+                <p>Experience the best of Singapore with us.</p>
+                <button>Book Now</button>
+            </div>
+            <div class="card">
+                <h3>By Air</h3>
+                <p>Convenient and affordable air transport options.</p>
+                <button>Book Now</button>
+            </div>
+            <div class="card">
+                <h3>By Train</h3>
+                <p>Comfortable train journeys at the best prices.</p>
+                <button>Book Now</button>
+            </div>
         </div>
     </div>
+    
     <footer>
         <p>&copy; 2024 Tourism Management System</p>
     </footer>

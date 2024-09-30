@@ -251,7 +251,7 @@
                 <li><a href="#tours">Tours</a></li>
                 <li><a href="#transport">Transport</a></li>
                 <li><a href="#bookings">Bookings</a></li>
-                <li><a href="#reviews&Enquiry">Reviews and Enquiry</a></li>
+                <li><a href="./user/review&enquiry.php">Reviews and Enquiry</a></li>
                 <li><a href="#payments">Payments</a></li>
                 <li><a href="#weather">Weather</a></li>
             </ul>

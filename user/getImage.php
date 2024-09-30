@@ -1,5 +1,5 @@
 <?php
-include 'config.php'; // Make sure this path is correct
+include './config.php'; // Make sure this path is correct
 
 if (isset($_GET['user_id'])) {
     $user_id = intval($_GET['user_id']); // Ensures that the user ID is an integer
