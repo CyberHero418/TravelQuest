@@ -2,7 +2,7 @@
 session_start();
 include 'config.php';
 
-// Redirect if not logged in
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch user details
+
 $sql = "SELECT * FROM user WHERE user_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
@@ -22,17 +22,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
     $name = $_POST['name'];
     $imageData = NULL;
 
-    // Check if a file has been uploaded without errors
+    
     if (isset($_FILES['user_pic']) && $_FILES['user_pic']['error'] == UPLOAD_ERR_OK) {
         $imageTmpPath = $_FILES['user_pic']['tmp_name'];
-        $imageData = file_get_contents($imageTmpPath);  // Convert image to binary data
+        $imageData = file_get_contents($imageTmpPath);  
 
-        // Update query to include image data
+        
         $sql = "UPDATE user SET email = ?, name = ?, user_pic = ? WHERE user_id = ?";
         $stmt = $conn->prepare($sql);
-        $null = NULL; // This is required to bind the blob type
+        $null = NULL; 
         $stmt->bind_param("ssbi", $email, $name, $null, $user_id);
-        $stmt->send_long_data(2, $imageData); // Sending the binary data
+        $stmt->send_long_data(2, $imageData); 
 
         if ($stmt->execute()) {
             echo "<script>alert('Profile updated successfully.');</script>";
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
             echo "Error updating record: " . $stmt->error;
         }
     } else {
-        // Update without changing the image
+        
         $sql = "UPDATE user SET email = ?, name = ? WHERE user_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssi", $email, $name, $user_id);
@@ -166,14 +166,14 @@ $conn->close();
             background-color: #5096dd;
             color: white;
             font-size: 16px;
-            margin-top: 14%;
+            margin-top: 22%;
             box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
 
-    <!-- Header from Homepage -->
+    
     <header>
         <h1>TravelQuest</h1>
         <nav>

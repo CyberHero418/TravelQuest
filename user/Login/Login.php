@@ -166,11 +166,10 @@
     
     <footer>
         <p>&copy; 2024 Tourism Management System</p>
-<<<<<<< HEAD
-        <li><a href="/admin/admin_login.php">Admin</a></li>
-=======
+
+
         <li><a href="../../admin/admin_login.php">Admin</a></li>
->>>>>>> 74d6ab3a8aca645c8c8084c3f733665139ac2cec
+
     </footer>
 
 </body>
