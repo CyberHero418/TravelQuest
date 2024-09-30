@@ -1,11 +1,11 @@
 <?php
-include 'config.php'; // Include your database connection file
+include 'config.php'; 
 
-// Check if an accommodation ID is passed
+
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $accommodation_id = $_GET['id'];
 
-    // Delete accommodation query
+    
     $query = "DELETE FROM accommodation WHERE accommodation_id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $accommodation_id);

@@ -190,7 +190,7 @@ $conn->close();
         </nav>
     </header>
 
-    <!-- Profile Section -->
+    
     <div class="profile-section">
     <img id="profile-pic" src="path/to/default/image.jpg" alt="Profile Picture" class="profile-user_pic">
 </div>
@@ -217,7 +217,7 @@ $conn->close();
         </form>
     </div>
 
-    <!-- Footer from Homepage -->
+    
     <footer>
         <p>&copy; 2024 Tourism Management System</p>
     </footer>
@@ -225,25 +225,25 @@ $conn->close();
 </body>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const userId = "<?php echo $user['user_id']; ?>"; // Retrieve the user ID from PHP
+        const userId = "<?php echo $user['user_id']; ?>"; 
         const profilePic = document.getElementById('profile-pic');
 
-        // URL to fetch the profile picture from your server
+        
         const imageUrl = `getImage.php?user_id=${userId}`;
 
-        // Create a new Image object
+        
         const imgLoader = new Image();
         imgLoader.onload = function () {
-            // If the image loads successfully, display it
+            
             profilePic.src = imageUrl;
         };
 
         imgLoader.onerror = function () {
-            // If the image fails to load, keep the default image or handle the error
-            profilePic.src = "path/to/default/image.jpg"; // Ensure this path is correct
+           
+            profilePic.src = "path/to/default/image.jpg"; 
         };
 
-        // Start loading the image
+        
         imgLoader.src = imageUrl;
     });
 </script>

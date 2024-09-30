@@ -1,11 +1,11 @@
 <?php
-include 'config.php'; // Include your database connection file
+include 'config.php'; 
 
-// Check if an accommodation ID is passed
+
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $accommodation_id = $_GET['id'];
 
-    // Fetch accommodation details
+    
     $query = "SELECT * FROM accommodation WHERE accommodation_id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $accommodation_id);
@@ -18,7 +18,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         exit();
     }
 
-    // Update accommodation details
+    
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $name = $_POST['name'];
         $type = $_POST['type'];
@@ -27,7 +27,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $availability = isset($_POST['availability']) ? 1 : 0;
         $description = $_POST['description'];
 
-        // Update query
+        
         $updateQuery = "UPDATE accommodation SET name = ?, type = ?, location = ?, price = ?, availability = ?, description = ? WHERE accommodation_id = ?";
         $stmt = $conn->prepare($updateQuery);
         $stmt->bind_param("sssdisi", $name, $type, $location, $price, $availability, $description, $accommodation_id);
@@ -52,7 +52,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <title>Edit Accommodation</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* General Styles */
+        
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
@@ -64,7 +64,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             min-height: 100vh;
         }
 
-        /* Header Styles */
+        
         header {
             background-color: #5096dd;
             padding: 20px 0;
@@ -107,10 +107,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             transform: translateY(-2px);
         }
 
-        /* Container Styles */
+       
         .container {
             max-width: 600px;
-            margin: 160px auto 40px auto; /* Adjust for fixed header */
+            margin: 160px auto 40px auto; 
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
@@ -153,7 +153,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             background-color: #16a085;
         }
 
-        /* Footer Styles */
+       
         footer {
             text-align: center;
             padding: 20px;

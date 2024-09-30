@@ -1,11 +1,11 @@
 <?php
-include 'config.php'; // Include your database connection file
+include 'config.php'; 
 
-// Check if a user ID is passed
+
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $user_id = $_GET['id'];
 
-    // Delete user query
+    
     $query = "DELETE FROM user WHERE user_id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $user_id);

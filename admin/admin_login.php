@@ -6,7 +6,7 @@
     <title>Admin Login - Tourism Management System</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* General Styles */
+        
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
@@ -18,7 +18,7 @@
             min-height: 100vh;
         }
 
-        /* Header Styles */
+        
         header {
             background-color: #5096dd;
             padding: 20px 0;
@@ -37,10 +37,10 @@
             margin: 0;
         }
 
-        /* Login Container */
+        
         .login-container {
             max-width: 400px;
-            margin: 140px auto; /* Adjust for fixed header */
+            margin: 140px auto; 
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
@@ -82,7 +82,7 @@
             margin-top: 10px;
         }
 
-        /* Footer Styles */
+        
         footer {
             text-align: center;
             padding: 20px;
@@ -105,21 +105,21 @@
         <h2>Admin Login</h2>
         <?php
         session_start();
-        include 'config.php'; // Ensure this file has the database connection settings
+        include 'config.php'; 
 
         if (isset($_POST['login'])) {
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
 
-            // Check if email and password match an admin user in the database
+            
             $query = "SELECT * FROM user WHERE email = ? AND password = ? AND role = 'admin'";
             $stmt = $conn->prepare($query);
-            $stmt->bind_param("ss", $email, $password); // Assuming password is stored in plain text (not recommended, consider using hashed passwords)
+            $stmt->bind_param("ss", $email, $password); 
             $stmt->execute();
             $result = $stmt->get_result();
 
             if ($result->num_rows > 0) {
-                // Valid admin credentials
+                
                 $_SESSION['admin_logged_in'] = true;
                 header("Location: http://localhost/TravelQuest/admin/admin.php?admin_id=" . $row['user_id']);
                 exit();

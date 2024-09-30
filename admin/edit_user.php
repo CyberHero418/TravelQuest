@@ -1,11 +1,10 @@
 <?php
-include 'config.php'; // Include your database connection file
+include 'config.php'; 
 
-// Check if a user ID is passed
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $user_id = $_GET['id'];
 
-    // Fetch user details
+    
     $query = "SELECT * FROM user WHERE user_id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $user_id);
@@ -18,13 +17,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         exit();
     }
 
-    // Update user details
+    
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $name = $_POST['name'];
         $email = $_POST['email'];
         $role = $_POST['role'];
 
-        // Update query
+        
         $updateQuery = "UPDATE user SET name = ?, email = ?, role = ? WHERE user_id = ?";
         $stmt = $conn->prepare($updateQuery);
         $stmt->bind_param("sssi", $name, $email, $role, $user_id);
@@ -49,7 +48,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <title>Edit User - Admin Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* General Styles */
+       
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
@@ -61,7 +60,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             min-height: 100vh;
         }
 
-        /* Header Styles */
+       
         header {
             background-color: #5096dd;
             padding: 20px 0;
@@ -104,10 +103,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             transform: translateY(-2px);
         }
 
-        /* Container Styles */
+        
         .container {
             max-width: 600px;
-            margin: 150px auto 40px auto; /* Adjust for fixed header */
+            margin: 150px auto 40px auto; 
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
@@ -151,7 +150,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             background-color: #16a085;
         }
 
-        /* Footer Styles */
+        
         footer {
             text-align: center;
             padding: 20px;
@@ -164,7 +163,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             bottom: 0;
         }
 
-        /* Make the layout responsive */
+        
         @media (max-width: 768px) {
             header nav ul {
                 flex-direction: column;

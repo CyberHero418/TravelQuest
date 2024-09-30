@@ -6,7 +6,7 @@
     <title>Admin Dashboard - Tourism Management System</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* General Styles */
+    
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
@@ -18,7 +18,7 @@
             min-height: 100vh;
         }
 
-        /* Header Styles */
+        
         header {
             background-color: #5096dd;
             padding: 20px 0;
@@ -61,10 +61,10 @@
             transform: translateY(-2px);
         }
 
-        /* Container Styles */
+        
         .container {
             max-width: 1200px;
-            margin: 140px auto 40px auto; /* Adjust for fixed header */
+            margin: 140px auto 40px auto; 
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
@@ -118,7 +118,7 @@
             background-color: #dc3545;
         }
 
-        /* Footer Styles */
+        
         footer {
             text-align: center;
             padding: 20px;
@@ -131,7 +131,7 @@
             bottom: 0;
         }
 
-        /* Make the layout responsive */
+        
         @media (max-width: 768px) {
             header nav ul {
                 flex-direction: column;
@@ -150,7 +150,7 @@
         <nav>
             <ul>
                 <li><a href="./admin.php">Dashboard</a></li>
-                <!-- <li><a href="./manage_users.php">Manage Users</a></li> -->
+               
                 <li><a href="./manage_accommodations.php">Manage Accommodations</a></li>
                 <li><a href="./manage_tours.php">Manage Tours</a></li>
                 <li><a href="./manage_transport.php">Manage Transport</a></li>
@@ -199,7 +199,7 @@
             </table>
         </div>
 
-        <!-- Repeat similar sections for Accommodations, Tours, Transport, Bookings, etc. -->
+        
 
         <div class="section">
             <h2>All Accommodations</h2>

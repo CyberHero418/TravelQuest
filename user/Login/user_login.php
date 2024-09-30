@@ -8,7 +8,7 @@ ini_set('display_errors', 1);
 $errorMessages = []; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Remove mysqli_real_escape_string as we use prepared statements
+    
     $name = $_POST['name'] ?? '';
     $password = $_POST['password'] ?? '';
 
