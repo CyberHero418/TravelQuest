@@ -1,3 +1,63 @@
+<?php
+
+session_start();
+include 'config.php';
+
+// Redirect if not logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+
+// Fetch available transport options from the `transport` table
+$sql = "SELECT transport_id, name, type, route, price, availability FROM transport WHERE availability = 1";
+$result = $conn->query($sql);
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $transport_id = $_POST['transport'];
+    $departure = $_POST['departure'];
+    $destination = $_POST['destination'];
+    $travel_date = $_POST['date'];
+    $passengers = $_POST['passengers'];
+
+    // Insert booking record into the `booking` table
+    $booking_sql = "INSERT INTO booking (user_id, transport_id, booking_date, total_price, status) VALUES (?, ?, ?, ?, 'Pending')";
+    $stmt = $conn->prepare($booking_sql);
+
+    // Calculate total price by fetching transport price and multiplying by passengers
+    $price_sql = "SELECT price FROM transport WHERE transport_id = ?";
+    $price_stmt = $conn->prepare($price_sql);
+    $price_stmt->bind_param("i", $transport_id);
+    $price_stmt->execute();
+    $price_result = $price_stmt->get_result();
+    $transport = $price_result->fetch_assoc();
+    $total_price = $transport['price'] * $passengers;
+
+    // Bind booking data and execute
+    $stmt->bind_param("iisd", $user_id, $transport_id, $travel_date, $total_price);
+    
+    if ($stmt->execute()) {
+        echo "<script>alert('Booking Successful!');</script>";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+}
+
+// Fetch user bookings
+$bookings_sql = "SELECT b.booking_id, t.name AS transport_name, t.route, b.booking_date, b.total_price, b.status 
+                 FROM booking b 
+                 JOIN transport t ON b.transport_id = t.transport_id 
+                 WHERE b.user_id = ?";
+$bookings_stmt = $conn->prepare($bookings_sql);
+$bookings_stmt->bind_param("i", $user_id);
+$bookings_stmt->execute();
+$user_bookings = $bookings_stmt->get_result();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +79,6 @@
             min-height: 100vh;
         }
 
-        
         header {
             background-color: #356698;
             padding: 20px 0;
@@ -56,7 +115,6 @@
             background-color: #16a085;
         }
 
-        
         .booking-container {
             background-color: #fff;
             padding: 40px;
@@ -116,7 +174,27 @@
             background-color: #16a085;
         }
 
-        
+        .user-bookings {
+            margin: 40px auto;
+            width: 80%;
+        }
+
+        .user-bookings table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .user-bookings th, .user-bookings td {
+            padding: 12px;
+            border: 1px solid #ccc;
+        }
+
+        .user-bookings th {
+            background-color: #356698;
+            color: white;
+        }
+
         footer {
             text-align: center;
             padding: 20px;
@@ -125,12 +203,10 @@
             font-size: 16px;
             box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
         }
-
     </style>
 </head>
 <body>
 
-    
     <header>
         <h1>TravelQuest</h1>
         <nav>
@@ -146,36 +222,67 @@
         </nav>
     </header>
 
-  
     <div class="booking-container">
         <h1>Book Your Transport</h1>
-        <form action="#" method="POST">
+        <form action="transport.php" method="POST">
             
-            <select name="transport-type" required>
-                <option value="">Select Transport Type</option>
-                <option value="bus">Bus</option>
-                <option value="train">Train</option>
-                <option value="air">Air</option>
+            <select name="transport" required>
+                <option value="">Select Transport</option>
+                <?php
+                // Dynamically load available transport options
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row['transport_id'] . "'>" . $row['type'] . " - " . $row['name'] . " (Route: " . $row['route'] . ", Price: $" . $row['price'] . ")</option>";
+                    }
+                } else {
+                    echo "<option value=''>No transport available</option>";
+                }
+                ?>
             </select>
 
-            
             <input type="text" name="departure" placeholder="Departure Location" required>
-
-            
             <input type="text" name="destination" placeholder="Destination Location" required>
-
-            
-            <input type="date" name="date" placeholder="Travel Date" required>
-
-            
+            <input type="date" name="date" required>
             <input type="number" name="passengers" placeholder="Number of Passengers" min="1" max="10" required>
 
-            
             <button type="submit">Book Now</button>
         </form>
     </div>
 
-    
+    <!-- Display User's Bookings -->
+    <div class="user-bookings">
+        <h2>Your Transport Bookings</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Transport Name</th>
+                    <th>Route</th>
+                    <th>Booking Date</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // Display user bookings if available
+                if ($user_bookings->num_rows > 0) {
+                    while ($booking = $user_bookings->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($booking['transport_name']) . "</td>";
+                        echo "<td>" . htmlspecialchars($booking['route']) . "</td>";
+                        echo "<td>" . htmlspecialchars($booking['booking_date']) . "</td>";
+                        echo "<td>$" . htmlspecialchars($booking['total_price']) . "</td>";
+                        echo "<td>" . htmlspecialchars($booking['status']) . "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='5'>No bookings found.</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+
     <footer>
         <p>&copy; 2024 Tourism Management System</p>
     </footer>
