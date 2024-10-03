@@ -6,7 +6,7 @@
     <title>Accommodations - Tourism Management System</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* General Styles */
+        
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
@@ -15,10 +15,10 @@
             color: #333;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Ensure the body takes full height */
+            min-height: 100vh; 
         }
 
-        /* Header Styles */
+        
         header {
             background-color: #5096dd;
             padding: 20px 0;
@@ -61,15 +61,15 @@
             transform: translateY(-2px);
         }
 
-        /* Container Styles */
+        
         .container {
             max-width: 1200px;
-            margin: 140px auto 40px auto; /* Adjust for fixed header */
+            margin: 140px auto 40px auto; 
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            flex: 1; /* Ensures this container takes available space */
+            flex: 1; 
         }
 
         .card-container {
@@ -126,7 +126,7 @@
             font-size: 14px;
         }
 
-        /* Footer Styles */
+        
         footer {
             text-align: center;
             padding: 20px;
@@ -139,7 +139,7 @@
             bottom: 0;
         }
 
-        /* Make the layout responsive */
+        
         @media (max-width: 768px) {
             .card-container {
                 flex-direction: column;
@@ -172,8 +172,8 @@
         <h2 style="text-align: center; margin-bottom: 30px; color: #34495e;">Available Accommodations</h2>
         <div class="card-container">
             <?php
-            include 'config.php'; // Ensure this file contains your database connection settings
-            $query = "SELECT * FROM accommodation WHERE availability = 1"; // Fetch available accommodations
+            include 'config.php'; 
+            $query = "SELECT * FROM accommodation WHERE availability = 1"; 
             $result = $conn->query($query);
 
             if ($result->num_rows > 0) {
