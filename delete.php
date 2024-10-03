@@ -19,7 +19,7 @@
             min-height: 100vh;
         }
 
-        /* Header Styles */
+        
         header {
             background-color: #356698;
             padding: 20px 0;
@@ -56,7 +56,7 @@
             background-color: #16a085;
         }
 
-        /* Delete Account Container */
+       
         .delete-container {
             background-color: rgba(255, 255, 255, 0.9);
             padding: 40px;
@@ -107,7 +107,7 @@
             text-decoration: underline;
         }
 
-        /* Footer Styles */
+        
         footer {
             text-align: center;
             padding: 20px;
@@ -121,7 +121,7 @@
 </head>
 <body>
 
-    <!-- Header Section -->
+    
     <header>
         <h1>TravelQuest</h1>
         <nav>
@@ -138,7 +138,6 @@
         </nav>
     </header>
 
-    <!-- Delete Account Section -->
     <div class="delete-container">
         <h1>Delete Account</h1>
         <p>Are you sure you want to delete your account? This action cannot be undone.</p>
@@ -148,7 +147,7 @@
         </div>
     </div>
 
-    <!-- Footer Section -->
+    
     <footer>
         <p>&copy; 2024 Tourism Management System</p>
     </footer>

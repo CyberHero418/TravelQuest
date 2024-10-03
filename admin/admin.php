@@ -155,7 +155,9 @@
                 <li><a href="./manage_tours.php">Manage Tours</a></li>
                 <li><a href="./manage_transport.php">Manage Transport</a></li>
                 <li><a href="./manage_bookings.php">Manage Bookings</a></li>
-               <li><a href="./logout.php">Logout</a></li> 
+               <li><a href="./message.php">Message </a></li>
+               <li><a href="./logout.php">Logout</a></li>
+
             </ul>
         </nav>
     </header>

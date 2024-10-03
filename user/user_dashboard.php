@@ -222,14 +222,16 @@
         </div>
         <nav>
             <ul>
-                <li><a href="./user_dashboard.php">Home</a></li>
-                <li><a href="./accomdation.php">Accommodations</a></li>
-                <li><a href="./tours.php">Tours</a></li>
-                <li><a href="./transport.php">Transport</a></li>
-                <li><a href="./book_status.php">Bookings</a></li>
-                <li><a href="./review&enquiry.php">Reviews and Enquiry</a></li>
-                <li><a href="./payment.php">Payments</a></li>
-                <li><a href="./weather.php">Weather</a></li>
+     
+                <li><a href="./user_dashboard.php?user_id=" . $row['user_id']">Home</a></li>
+                <li><a href="./accomdation.php?user_id=" . $row['user_id']">Accommodations</a></li>
+                <li><a href="./tours.php?user_id=" . $row['user_id']">Tours</a></li>
+                <li><a href="./transport.php?user_id=" . $row['user_id']">Transport</a></li>
+                <li><a href="./book_status.php?user_id=" . $row['user_id']">Bookings</a></li>
+                <li><a href="./review&enquiry.php?user_id=" . $row['user_id']">Reviews and Enquiry</a></li>
+                <li><a href="./payment.php" . $row['user_id']">Payments</a></li>
+                <li><a href="./weather.php?user_id=" . $row['user_id']">Weather</a></li>
+                <li><a href="./message.php" . $row['user_id']">Message</a></li>
             </ul>
         </nav>
     </header>

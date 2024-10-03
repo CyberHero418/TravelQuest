@@ -1,12 +1,18 @@
+
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 include 'config.php';
 
-// Redirect if not logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+} else {
+    header("Location:../user_login.php");
     exit();
 }
+
 
 $user_id = $_SESSION['user_id'];
 
@@ -15,7 +21,16 @@ $sql = "SELECT * FROM user WHERE user_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
-$user = $stmt->get_result()->fetch_assoc();
+$result = $stmt->get_result();
+
+// Check if user exists
+if ($result->num_rows > 0) {
+    $user = $result->fetch_assoc();
+} else {
+    // Handle the case where the user is not found
+    echo "<script>alert('User not found.');</script>";
+    $user = null;
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
     $email = $_POST['email'];
@@ -62,88 +77,119 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile - Tourism Management System</title>
+    <title>User Profile - TravelQuest</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
             color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center; /* Center vertically */
+            align-items: center; /* Center horizontally */
         }
 
+        /* TravelQuest header */
         header {
-            background-color: #5096dd;
-            padding: 20px 0;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
 
         header h1 {
-            color: #fff;
+            color: #5096dd;
             font-size: 36px;
-            letter-spacing: 2px;
-            margin: 0;
-        }
-
-        header nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        header nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 15px;
-            background-color: #1abc9c;
-            border-radius: 50px;
-            transition: background-color 0.3s;
             font-weight: 600;
+            letter-spacing: 2px;
         }
 
-        header nav ul li a:hover {
-            background-color: #16a085;
+        /* Back button */
+        .back-btn {
+            text-decoration: none;
+            color: #fff;
+            background-color: #5096dd;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
         }
 
+        .back-btn:hover {
+            background-color: #4079bb;
+        }
+
+        /* Profile form and picture styling */
         .container {
-            width: 85%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 500px;
             margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .profile-section {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .profile-user_pic {
+        .profile-picture-container {
             width: 150px;
             height: 150px;
             border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .profile-picture-container img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border: 3px solid #fff;
         }
 
         .form-group {
-            max-width: 400px;
-            margin: 0 auto 15px auto;
+            width: 100%;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+            display: block;
         }
 
         input[type="email"], input[type="text"], input[type="file"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-top: 8px;
             border: 1px solid #ccc;
             border-radius: 6px;
             font-size: 16px;
             box-sizing: border-box;
+            background-color: #fff;
+            transition: border-color 0.3s;
+        }
+
+        input[type="email"]:focus, input[type="text"]:focus, input[type="file"]:focus {
+            border-color: #5096dd;
+            outline: none;
         }
 
         .btn {
-            display: inline-block;
             padding: 10px 20px;
             background-color: #28a745;
             border: none;
@@ -151,100 +197,70 @@ $conn->close();
             color: #fff;
             font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
             margin-top: 15px;
+            display: inline-block;
         }
 
         .btn:hover {
             background-color: #218838;
+            transform: translateY(-2px);
         }
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #5096dd;
-            color: white;
-            font-size: 16px;
-            margin-top: 14%;
-            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-        }
     </style>
 </head>
 <body>
 
-    <!-- Header from Homepage -->
+    <!-- TravelQuest Header -->
     <header>
         <h1>TravelQuest</h1>
-        <nav>
-            <ul>
-                <li><a href="./user_dashboard.php">Home</a></li>
-                <li><a href="./">Accommodations</a></li>
-                <li><a href="">Tours</a></li>
-                <li><a href="./transport.php">Transport</a></li>
-                <li><a href="#bookings">Bookings</a></li>
-                <li><a href="./review&enquiry.php">Reviews and Enquiry</a></li>
-                <li><a href="#payments">Payments</a></li>
-                <li><a href="./weather.php">Weather</a></li>
-            </ul>
-        </nav>
     </header>
 
-    <!-- Profile Section -->
-    <div class="profile-section">
-    <img id="profile-pic" src="path/to/default/image.jpg" alt="Profile Picture" class="profile-user_pic">
+    <!-- Back Button -->
+    <a href="javascript:history.back()" class="back-btn">Go Back</a>
+
+    <div class="profile-picture-container" style="float: justify-center;">
+    <?php if ($user): ?>
+        <img id="profilePic" src="data:image/jpeg;base64,<?php echo base64_encode($user['user_pic']); ?>" alt="Profile Picture">
+    <?php else: ?>
+        <img id="profilePic" src="default-profile.png" alt="Default Profile Picture">
+    <?php endif; ?>
 </div>
 
-
-
-
-        <form action="profile.php" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="user_pic">Profile user_pic:</label>
-                <input type="file" id="user_pic" name="user_pic" accept="user_pic/*">
-            </div>
-            <div style="text-align: center;">
-                <button type="submit" name="update" class="btn update-btn"><i class="fas fa-user-edit"></i> Update Profile</button>
-            </div>
-        </form>
+<form action="profile.php" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="<?php echo $user ? htmlspecialchars($user['email']) : ''; ?>" required>
     </div>
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="<?php echo $user ? htmlspecialchars($user['name']) : ''; ?>" required>
+    </div>
+    <div class="form-group">
+        <label for="user_pic">Profile Picture:</label>
+        <input type="file" id="user_pic" name="user_pic" accept="image/*">
+    </div>
+    <div style="text-align: center;">
+        <button type="submit" name="update" class="btn update-btn"><i class="fas fa-user-edit"></i> Update Profile</button>
+    </div>
+</form>
 
-    <!-- Footer from Homepage -->
-    <footer>
-        <p>&copy; 2024 Tourism Management System</p>
-    </footer>
 
-</body>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const userId = "<?php echo $user['user_id']; ?>"; // Retrieve the user ID from PHP
-        const profilePic = document.getElementById('profile-pic');
-
-        // URL to fetch the profile picture from your server
-        const imageUrl = `getImage.php?user_id=${userId}`;
-
-        // Create a new Image object
-        const imgLoader = new Image();
-        imgLoader.onload = function () {
-            // If the image loads successfully, display it
-            profilePic.src = imageUrl;
+    window.onload = function() {
+        var img = document.getElementById('profilePic');
+        img.onload = function() {
+            if (img.naturalWidth > img.naturalHeight) {
+                img.style.height = '100%';
+                img.style.width = 'auto';
+            } else {
+                img.style.width = '100%';
+                img.style.height = 'auto';
+            }
+            img.style.objectFit = 'cover';
         };
-
-        imgLoader.onerror = function () {
-            // If the image fails to load, keep the default image or handle the error
-            profilePic.src = "path/to/default/image.jpg"; // Ensure this path is correct
-        };
-
-        // Start loading the image
-        imgLoader.src = imageUrl;
-    });
+    };
 </script>
 
+</body>
+</html>
