@@ -229,7 +229,7 @@ $user_bookings = $bookings_stmt->get_result();
             <select name="transport" required>
                 <option value="">Select Transport</option>
                 <?php
-                // Dynamically load available transport options
+            
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         echo "<option value='" . $row['transport_id'] . "'>" . $row['type'] . " - " . $row['name'] . " (Route: " . $row['route'] . ", Price: $" . $row['price'] . ")</option>";
@@ -249,7 +249,7 @@ $user_bookings = $bookings_stmt->get_result();
         </form>
     </div>
 
-    <!-- Display User's Bookings -->
+    
     <div class="user-bookings">
         <h2>Your Transport Bookings</h2>
         <table>
@@ -264,7 +264,7 @@ $user_bookings = $bookings_stmt->get_result();
             </thead>
             <tbody>
                 <?php
-                // Display user bookings if available
+                
                 if ($user_bookings->num_rows > 0) {
                     while ($booking = $user_bookings->fetch_assoc()) {
                         echo "<tr>";

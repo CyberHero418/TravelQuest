@@ -267,7 +267,7 @@ if (isset($_GET['edit'])) {
     </header>
 
     <div class="container">
-        <!-- Search Bar -->
+        
         <div class="search-container">
             <form action="manage_bookings.php" method="GET">
                 <input type="text" name="search" placeholder="Search by email, status, or booking date" value="<?php echo htmlspecialchars($search_query); ?>">
@@ -275,11 +275,11 @@ if (isset($_GET['edit'])) {
             </form>
         </div>
 
-        <!-- Booking Form (Create or Update) -->
+        <
         <div class="section">
             <h2>Create or Update Booking</h2>
             <form action="manage_bookings.php" method="POST">
-                <!-- Hidden input to track booking ID for updating -->
+                
                 <input type="hidden" name="id" value="<?php echo $edit_data ? $edit_data['booking_id'] : ''; ?>">
 
                 <div class="form-group">
@@ -337,14 +337,14 @@ if (isset($_GET['edit'])) {
                     </select>
                 </div>
 
-                <!-- Buttons for Create or Update -->
+                
                 <button type="submit" name="<?php echo $edit_data ? 'update' : 'create'; ?>">
                     <?php echo $edit_data ? 'Update' : 'Create'; ?>
                 </button>
             </form>
         </div>
 
-        <!-- Booking List Table -->
+        
         <div class="section">
             <h2>All Bookings</h2>
             <table>

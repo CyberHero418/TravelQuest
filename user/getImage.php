@@ -1,8 +1,8 @@
 <?php
-include './config.php'; // Make sure this path is correct
+include './config.php'; 
 
 if (isset($_GET['user_id'])) {
-    $user_id = intval($_GET['user_id']); // Ensures that the user ID is an integer
+    $user_id = intval($_GET['user_id']); 
 
     $sql = "SELECT user_pic FROM user WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
@@ -12,10 +12,10 @@ if (isset($_GET['user_id'])) {
     $stmt->fetch();
 
     if ($imageData) {
-        header("Content-Type: image/jpeg"); // Adjust according to your image type
+        header("Content-Type: image/jpeg"); 
         echo $imageData;
     } else {
-        // Image not found, send a default image or error message
+        
         header("HTTP/1.0 404 Not Found");
     }
     $stmt->close();

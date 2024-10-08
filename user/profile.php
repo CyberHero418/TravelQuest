@@ -90,11 +90,11 @@ $conn->close();
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            justify-content: center; /* Center vertically */
-            align-items: center; /* Center horizontally */
+            justify-content: center; 
+            align-items: center; 
         }
 
-        /* TravelQuest header */
+    
         header {
             text-align: center;
             margin-bottom: 20px;
@@ -107,7 +107,7 @@ $conn->close();
             letter-spacing: 2px;
         }
 
-        /* Back button */
+        
         .back-btn {
             text-decoration: none;
             color: #fff;
@@ -125,7 +125,7 @@ $conn->close();
             background-color: #4079bb;
         }
 
-        /* Profile form and picture styling */
+        
         .container {
             display: flex;
             flex-direction: column;
@@ -211,12 +211,12 @@ $conn->close();
 </head>
 <body>
 
-    <!-- TravelQuest Header -->
+    
     <header>
         <h1>TravelQuest</h1>
     </header>
 
-    <!-- Back Button -->
+    
     <a href="javascript:history.back()" class="back-btn">Go Back</a>
 
     <div class="profile-picture-container" style="float: justify-center;">

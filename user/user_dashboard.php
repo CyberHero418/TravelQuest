@@ -230,7 +230,8 @@
                 <li><a href="./book_status.php?user_id=" . $row['user_id']">Bookings</a></li>
                 <li><a href="./review&enquiry.php?user_id=" . $row['user_id']">Reviews and Enquiry</a></li>
                 <li><a href="./payment.php" . $row['user_id']">Payments</a></li>
-                <li><a href="./weather.php?user_id=" . $row['user_id']">Weather</a></li>
+                <li><a href="../map_weather.php" . $row['user_id']">Weather</a></li>
+                <li><a href="./weather.phps" . $row['user_id']">Map</a></li>
                 <li><a href="./message.php" . $row['user_id']">Message</a></li>
             </ul>
         </nav>

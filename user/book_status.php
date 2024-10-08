@@ -10,35 +10,32 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Function to validate IDs
-function validateIDs($conn, $accID, $tourID, $transID) {
-    $exists = true;
-    // Check if accommodation ID exists
-    if ($accID && !$conn->query("SELECT 1 FROM accommodation WHERE accommodation_id = $accID")->num_rows) {
-        $exists = false;
-    }
-    // Check if tour ID exists
-    if ($tourID && !$conn->query("SELECT 1 FROM tour WHERE tour_id = $tourID")->num_rows) {
-        $exists = false;
-    }
-    // Check if transport ID exists
-    if ($transID && !$conn->query("SELECT 1 FROM transport WHERE transport_id = $transID")->num_rows) {
-        $exists = false;
-    }
-    return $exists;
+// Function to validate package by name
+function getPackageByName($conn, $packageName) {
+    $stmt = $conn->prepare("SELECT * FROM package WHERE name = ?");
+    $stmt->bind_param("s", $packageName);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_assoc();
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_booking'])) {
-    $accommodation_id = $_POST['accommodation_id'];
-    $tour_id = $_POST['tour_id'];
-    $transport_id = $_POST['transport_id'];
+    $package_name = $_POST['package_name'];
     $booking_date = $_POST['booking_date'];
-    $total_price = $_POST['total_price'];
     $status = $_POST['status'];
 
-    // Validate IDs before insertion
-    if (validateIDs($conn, $accommodation_id, $tour_id, $transport_id)) {
-        $stmt = $conn->prepare("INSERT INTO booking (user_id, accommodation_id, tour_id, transport_id, booking_date, total_price, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    // Get package details by name
+    $packageData = getPackageByName($conn, $package_name);
+
+    if ($packageData) {
+        $accommodation_id = $packageData['accommodation_id'];
+        $tour_id = $packageData['tour_id'];
+        $transport_id = $packageData['transport_id'];
+        $total_price = $packageData['price'];
+
+        // Insert booking using package details
+        $stmt = $conn->prepare("INSERT INTO booking (user_id, accommodation_id, tour_id, transport_id, booking_date, total_price, status) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iiissds", $user_id, $accommodation_id, $tour_id, $transport_id, $booking_date, $total_price, $status);
         $stmt->execute();
 
@@ -49,12 +46,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_booking'])) {
         }
         $stmt->close();
     } else {
-        echo "<script>alert('One or more IDs do not exist. Please check and try again.');</script>";
+        echo "<script>alert('Package not found. Please check the package name and try again.');</script>";
     }
 }
 
 // Fetch existing bookings
-$result = $conn->query("SELECT booking_id, accommodation_id, tour_id, transport_id, booking_date, total_price, status FROM booking WHERE user_id = $user_id");
+$result = $conn->query("SELECT booking_id, accommodation_id, tour_id, transport_id, booking_date, total_price, status 
+                        FROM booking WHERE user_id = $user_id");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -165,11 +163,8 @@ $result = $conn->query("SELECT booking_id, accommodation_id, tour_id, transport_
     <div class="container">
         <h2>Add New Booking</h2>
         <form method="post">
-            <input type="number" name="accommodation_id" placeholder="Accommodation ID" required>
-            <input type="number" name="tour_id" placeholder="Tour ID" required>
-            <input type="number" name="transport_id" placeholder="Transport ID" required>
+            <input type="text" name="package_name" placeholder="Package Name" required>
             <input type="date" name="booking_date" placeholder="Booking Date" required>
-            <input type="text" name="total_price" placeholder="Total Price" required>
             <select name="status">
                 <option value="pending">Pending</option>
                 <option value="confirmed">Confirmed</option>

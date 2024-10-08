@@ -2,7 +2,7 @@
 session_start();
 include 'config.php';
 
-// Check if the user is logged in
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -11,16 +11,16 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $role =  'admin';
 
-// Fetch users or admins for the receiver list (Admins can select users and vice versa)
+
 $receiver_query = $is_admin ? "SELECT user_id, name FROM user WHERE role = 'user'" : "SELECT user_id, name FROM user WHERE role = 'admin'";
 $receiver_result = $conn->query($receiver_query);
 
-// Handle sending messages
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['message'])) {
     $receiver_id = $_POST['receiver_id'];
     $message = $_POST['message'];
 
-    // Insert the message into the database
+    
     $stmt = $conn->prepare("INSERT INTO messages (sender_id, receiver_id, message, sender_role) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("iiss", $user_id, $receiver_id, $message, $role);
 
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['message'])) {
     }
 }
 
-// Fetch all messages for the user or admin
+
 $query = "SELECT * FROM messages WHERE sender_id = ? OR receiver_id = ? ORDER BY timestamp DESC";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("ii", $user_id, $user_id);
@@ -134,7 +134,7 @@ $result = $stmt->get_result();
 <div class="container">
     <h1>Message System</h1>
 
-    <!-- Message Form (for sending messages) -->
+ 
     <div class="message-form">
         <form action="" method="POST">
             <label for="receiver_id">Send to:</label>
@@ -151,7 +151,7 @@ $result = $stmt->get_result();
         </form>
     </div>
 
-    <!-- View Messages -->
+    
     <h2>Your Messages</h2>
     <?php while ($row = $result->fetch_assoc()) :
         $is_sender = $row['sender_id'] == $user_id;

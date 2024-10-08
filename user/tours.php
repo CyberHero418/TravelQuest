@@ -6,36 +6,46 @@
     <title>Tours - Tourism Management System</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
             color: #333;
-            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; 
         }
+
+        
         header {
             background-color: #5096dd;
             padding: 20px 0;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             position: fixed;
+            top: 0;
             width: 100%;
             z-index: 1000;
         }
+
         header h1 {
             color: #fff;
-            font-size: 36px;
-            letter-spacing: 2px;
+            font-size: 28px;
+            letter-spacing: 1px;
             margin: 0;
         }
+
         header nav ul {
             list-style: none;
             padding: 0;
             display: flex;
             justify-content: center;
             gap: 15px;
+            margin: 10px 0 0;
         }
+
         header nav ul li a {
             color: #fff;
             text-decoration: none;
@@ -45,43 +55,78 @@
             transition: background-color 0.3s, transform 0.3s;
             font-weight: 600;
         }
+
         header nav ul li a:hover {
             background-color: #16a085;
             transform: translateY(-2px);
         }
+
+        
         .container {
-            width: 85%;
-            margin: 100px auto; /* Adjusted for fixed header */
-            margin-bottom: 30px;
+            max-width: 1200px;
+            margin: 140px auto 40px auto; 
             padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            flex: 1; 
         }
+
         .card-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 30px;
-            justify-content: center;
+            gap: 20px;
+            justify-content: space-evenly;
         }
+
         .card {
-            background-color: #c1cbe9;
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 300px;
-            transition: transform 0.3s;
+            text-align: left;
+            width: 100%;
+            max-width: 320px;
+            transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
         }
+
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
         }
+
         .card h3 {
-            font-size: 22px;
-            margin: 15px 0;
+            font-size: 20px;
+            margin: 10px 0;
             color: #34495e;
         }
+
         .card p {
             color: #7f8c8d;
+            line-height: 1.5;
+            margin: 5px 0;
+            font-size: 14px;
         }
+
+        .price {
+            color: #16a085;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .availability {
+            margin-top: 10px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background-color: #1abc9c;
+            color: white;
+            font-weight: 600;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        
         footer {
             text-align: center;
             padding: 20px;
@@ -89,10 +134,21 @@
             color: white;
             font-size: 16px;
             box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-            position: relative;
-            bottom: 0;
             width: 100%;
-            margin-top: 20px;
+            position: fixed;
+            bottom: 0;
+        }
+
+        
+        @media (max-width: 768px) {
+            .card-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            header nav ul {
+                flex-direction: column;
+            }
         }
     </style>
 </head>

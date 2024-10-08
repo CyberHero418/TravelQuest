@@ -1,5 +1,5 @@
 <?php
-include './config.php'; // Make sure this path is correct
+include './config.php'; 
 $error = "";
 $success = "";
 
@@ -12,13 +12,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($name) || empty($email) || empty($password)) {
         $error = "All fields are required.";
     } else {
-            // Prepared statement to insert new user
+            
             $insertQuery = "INSERT INTO user (name, email, password, role) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($insertQuery);
             $stmt->bind_param("ssss", $name, $email, $password,$role);
             if ($stmt->execute()) {
                 $success = "Registration successful! You can now log in.";
-                $user_id = $stmt->insert_id; // Get the last inserted id
+                $user_id = $stmt->insert_id;
                 header("Location: http://localhost/TravelQuest/user/user_dashboard.php?user_id=" . $row['user_id']);
                 exit();
             } else {
