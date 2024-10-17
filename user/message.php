@@ -135,7 +135,7 @@ $result = $stmt->get_result();
 <div class="container">
     <h1>Message System</h1>
 
-    <!-- Message Form (for sending messages) -->
+    
     <div class="message-form">
         <form action="" method="POST">
             <label for="receiver_id">Send to:</label>
@@ -152,7 +152,6 @@ $result = $stmt->get_result();
         </form>
     </div>
 
-    <!-- View Messages -->
     <h2>Your Messages</h2>
     <?php while ($row = $result->fetch_assoc()) :
         $is_sender = $row['sender_id'] == $user_id;

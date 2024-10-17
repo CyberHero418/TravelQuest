@@ -171,8 +171,8 @@
         <h2>Available Tours</h2>
         <div class="card-container">
             <?php
-            include 'config.php'; // Ensure the database connection is set up correctly
-            $query = "SELECT * FROM tour WHERE availability = 1"; // Fetch available tours
+            include 'config.php'; 
+            $query = "SELECT * FROM tour WHERE availability = 1"; 
             $result = $conn->query($query);
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {

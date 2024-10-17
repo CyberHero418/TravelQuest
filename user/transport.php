@@ -3,7 +3,7 @@
 session_start();
 include 'config.php';
 
-// Redirect if not logged in
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -11,11 +11,11 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch available transport options from the `transport` table
+
 $sql = "SELECT transport_id, name, type, route, price, availability FROM transport WHERE availability = 1";
 $result = $conn->query($sql);
 
-// Handle form submission
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $transport_id = $_POST['transport'];
     $departure = $_POST['departure'];
@@ -23,11 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $travel_date = $_POST['date'];
     $passengers = $_POST['passengers'];
 
-    // Insert booking record into the `booking` table
+    
     $booking_sql = "INSERT INTO booking (user_id, transport_id, booking_date, total_price, status) VALUES (?, ?, ?, ?, 'Pending')";
     $stmt = $conn->prepare($booking_sql);
 
-    // Calculate total price by fetching transport price and multiplying by passengers
+    
     $price_sql = "SELECT price FROM transport WHERE transport_id = ?";
     $price_stmt = $conn->prepare($price_sql);
     $price_stmt->bind_param("i", $transport_id);
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $transport = $price_result->fetch_assoc();
     $total_price = $transport['price'] * $passengers;
 
-    // Bind booking data and execute
+    
     $stmt->bind_param("iisd", $user_id, $transport_id, $travel_date, $total_price);
     
     if ($stmt->execute()) {
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Fetch user bookings
+
 $bookings_sql = "SELECT b.booking_id, t.name AS transport_name, t.route, b.booking_date, b.total_price, b.status 
                  FROM booking b 
                  JOIN transport t ON b.transport_id = t.transport_id 

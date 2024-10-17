@@ -1,15 +1,15 @@
 <?php
 include 'config.php';
 
-// Fetch users, accommodations, and transports to populate dropdowns
+
 $users = $conn->query("SELECT user_id, name FROM user");
 $accommodations = $conn->query("SELECT accommodation_id, name FROM accommodation");
 $transports = $conn->query("SELECT transport_id, name FROM transport");
 
-// Handle Create, Update, and Soft Delete actions
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['create'])) {
-        // Insert a new booking record
+        
         $user_id = $_POST['user_id'];
         $accommodation_id = $_POST['accommodation_id'];
         $transport_id = $_POST['transport_id'];
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute();
         $stmt->close();
     } elseif (isset($_POST['update'])) {
-        // Update an existing booking record
+        
         $id = $_POST['id'];
         $user_id = $_POST['user_id'];
         $accommodation_id = $_POST['accommodation_id'];
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute();
         $stmt->close();
     } elseif (isset($_POST['delete'])) {
-        // Soft delete: Mark booking as "Cancelled" instead of deleting
+        
         $id = $_POST['id'];
         $query = "UPDATE booking SET status = 'Cancelled' WHERE booking_id = ?";
         $stmt = $conn->prepare($query);
@@ -49,13 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Handle Search Query
+
 $search_query = "";
 if (isset($_GET['search'])) {
     $search_query = $_GET['search'];
 }
 
-// Modify the SQL query to include the search functionality for email, status, and booking_date
+
 $query = "SELECT booking.*, user.email FROM booking 
           JOIN user ON booking.user_id = user.user_id 
           WHERE user.email LIKE ? OR booking.status LIKE ? OR booking.booking_date LIKE ?";
@@ -65,7 +65,7 @@ $stmt->bind_param("sss", $search_term, $search_term, $search_term);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Fetch data for editing if "edit" parameter is present
+
 $edit_data = null;
 if (isset($_GET['edit'])) {
     $edit_id = $_GET['edit'];
@@ -86,7 +86,7 @@ if (isset($_GET['edit'])) {
     <title>Manage Bookings - Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* General Styles */
+       
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
@@ -98,7 +98,7 @@ if (isset($_GET['edit'])) {
             min-height: 100vh;
         }
 
-        /* Header Styles */
+        
         header {
             background-color: #5096dd;
             padding: 20px 0;
@@ -141,10 +141,10 @@ if (isset($_GET['edit'])) {
             transform: translateY(-2px);
         }
 
-        /* Container Styles */
+        
         .container {
             max-width: 1200px;
-            margin: 140px auto 40px auto; /* Adjust for fixed header */
+            margin: 140px auto 40px auto; 
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
@@ -198,7 +198,7 @@ if (isset($_GET['edit'])) {
             background-color: #dc3545;
         }
 
-        /* Footer Styles */
+        
         footer {
             text-align: center;
             padding: 20px;
@@ -211,7 +211,7 @@ if (isset($_GET['edit'])) {
             bottom: 0;
         }
 
-        /* Search Form Styles */
+        
         .search-container {
             text-align: center;
             margin-bottom: 20px;
@@ -238,7 +238,7 @@ if (isset($_GET['edit'])) {
             background-color: #218838;
         }
 
-        /* Make the layout responsive */
+        
         @media (max-width: 768px) {
             header nav ul {
                 flex-direction: column;

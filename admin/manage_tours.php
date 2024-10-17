@@ -3,16 +3,16 @@
 session_start();
 include 'config.php';
 
-// Redirect if not logged in or not an admin
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-// Handle search query
+
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-// Fetch tours to display
+
 $query = "SELECT * FROM tour WHERE name LIKE ? ORDER BY tour_id DESC";
 $stmt = $conn->prepare($query);
 $search_param = "%{$search}%";
@@ -20,7 +20,7 @@ $stmt->bind_param("s", $search_param);
 $stmt->execute();
 $tours = $stmt->get_result();
 
-// Handle creating or updating tours
+
 $edit_data = null;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $availability = isset($_POST['availability']) ? 1 : 0;
 
     if (isset($_POST['create'])) {
-        // Create a new tour
+        
         $create_query = "INSERT INTO tour (name, location, price, duration, description, availability) VALUES (?, ?, ?, ?, ?, ?)";
         $create_stmt = $conn->prepare($create_query);
         $create_stmt->bind_param("ssdsis", $name, $location, $price, $duration, $description, $availability);
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: manage_tours.php");
         exit();
     } elseif (isset($_POST['update'])) {
-        // Update an existing tour
+       
         $tour_id = $_POST['tour_id'];
         $update_query = "UPDATE tour SET name = ?, location = ?, price = ?, duration = ?, description = ?, availability = ? WHERE tour_id = ?";
         $update_stmt = $conn->prepare($update_query);
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Handle tour deletion
+
 if (isset($_GET['delete'])) {
     $tour_id = $_GET['delete'];
     $delete_query = "DELETE FROM tour WHERE tour_id = ?";
@@ -61,7 +61,7 @@ if (isset($_GET['delete'])) {
     exit();
 }
 
-// Fetch tour data for editing
+
 if (isset($_GET['edit'])) {
     $tour_id = $_GET['edit'];
     $edit_query = "SELECT * FROM tour WHERE tour_id = ?";
@@ -227,14 +227,14 @@ if (isset($_GET['edit'])) {
     </header>
 
     <div class="container">
-        <!-- Search Bar -->
+      
         <div class="search-bar">
             <form method="GET" action="manage_tours.php">
                 <input type="text" name="search" placeholder="Search tours..." value="<?php echo htmlspecialchars($search); ?>">
             </form>
         </div>
 
-        <!-- Tour List Table -->
+       
         <table>
             <thead>
                 <tr>
@@ -265,7 +265,7 @@ if (isset($_GET['edit'])) {
             </tbody>
         </table>
 
-        <!-- Tour Form (Create/Update) -->
+       
         <div class="form-container">
             <h2><?php echo $edit_data ? 'Update Tour' : 'Create New Tour'; ?></h2>
             <form action="manage_tours.php" method="POST">

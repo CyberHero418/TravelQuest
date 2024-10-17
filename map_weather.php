@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tours - Tourism Management System</title>
+    <title>Weather - Tourism Management System</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -160,7 +160,7 @@
     ?>
 
     <header>
-        <h1>TravelQuest - Tours</h1>
+        <h1>TravelQuest - Weather</h1>
         <nav>
             <ul>
                 <li><a href="./user_dashboard.php">Home</a></li>

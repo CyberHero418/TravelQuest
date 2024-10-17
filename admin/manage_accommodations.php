@@ -1,7 +1,7 @@
 <?php
-include 'config.php'; // Include your database connection file
+include 'config.php'; 
 
-// Handle form submission for adding a new accommodation
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $type = $_POST['type'];
@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $availability = isset($_POST['availability']) ? 1 : 0;
     $description = $_POST['description'];
 
-    // Insert the new accommodation into the database
+    
     $query = "INSERT INTO accommodation (name, type, location, price, availability, description) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("sssdss", $name, $type, $location, $price, $availability, $description);
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Manage Accommodations - Admin Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* General Styles */
+       
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             min-height: 100vh;
         }
 
-        /* Header Styles */
+        
         header {
             background-color: #5096dd;
             padding: 20px 0;
@@ -86,10 +86,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             transform: translateY(-2px);
         }
 
-        /* Container Styles */
+        
         .container {
             max-width: 1200px;
-            margin: 160px auto 40px auto; /* Adjust for fixed header */
+            margin: 160px auto 40px auto; 
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .add-form {
-            display: none; /* Initially hidden */
+            display: none; 
             margin-bottom: 20px;
             padding: 20px;
             background-color: #f9f9f9;
@@ -180,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: #fff;
         }
 
-        /* Footer Styles */
+       
         footer {
             text-align: center;
             padding: 20px;
@@ -193,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             bottom: 0;
         }
 
-        /* Make the layout responsive */
+        
         @media (max-width: 768px) {
             header nav ul {
                 flex-direction: column;
@@ -221,7 +221,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h2>All Accommodations</h2>
             <a href="#" class="add-btn" onclick="toggleAddForm()">Add New Accommodation</a>
 
-            <!-- Add Accommodation Form -->
+            
             <div class="add-form" id="addForm">
                 <h3>Add New Accommodation</h3>
                 <form method="POST" action="">

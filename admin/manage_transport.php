@@ -1,10 +1,10 @@
 <?php
 include 'config.php';
 
-// Handle Create, Update, and Soft Delete actions
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['create'])) {
-        // Insert a new transport record
+        
         $type = $_POST['type'];
         $name = $_POST['name'];
         $route = $_POST['route'];
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute();
         $stmt->close();
     } elseif (isset($_POST['update'])) {
-        // Update an existing transport record
+        
         $id = $_POST['id'];
         $type = $_POST['type'];
         $name = $_POST['name'];
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute();
         $stmt->close();
     } elseif (isset($_POST['soft_delete'])) {
-        // Soft delete: Mark transport as unavailable (availability = 0)
+        
         $id = $_POST['id'];
         $query = "UPDATE transport SET availability = 0 WHERE transport_id = ?";
         $stmt = $conn->prepare($query);
@@ -42,13 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Handle Search Query
+
 $search_query = "";
 if (isset($_GET['search'])) {
     $search_query = $_GET['search'];
 }
 
-// Modify the SQL query to include the search functionality
+
 $query = "SELECT * FROM transport WHERE type LIKE ? OR name LIKE ? OR route LIKE ?";
 $search_term = "%" . $search_query . "%";
 $stmt = $conn->prepare($query);
@@ -56,7 +56,7 @@ $stmt->bind_param("sss", $search_term, $search_term, $search_term);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Fetch data for editing if "edit" parameter is present
+
 $edit_data = null;
 if (isset($_GET['edit'])) {
     $edit_id = $_GET['edit'];
@@ -77,7 +77,7 @@ if (isset($_GET['edit'])) {
     <title>Manage Transport - Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* General Styles */
+        
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
@@ -89,7 +89,7 @@ if (isset($_GET['edit'])) {
             min-height: 100vh;
         }
 
-        /* Header Styles */
+        
         header {
             background-color: #5096dd;
             padding: 20px 0;
@@ -132,10 +132,10 @@ if (isset($_GET['edit'])) {
             transform: translateY(-2px);
         }
 
-        /* Container Styles */
+        
         .container {
             max-width: 1200px;
-            margin: 140px auto 40px auto; /* Adjust for fixed header */
+            margin: 140px auto 40px auto;
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
@@ -189,7 +189,7 @@ if (isset($_GET['edit'])) {
             background-color: #dc3545;
         }
 
-        /* Footer Styles */
+        
         footer {
             text-align: center;
             padding: 20px;
@@ -202,7 +202,7 @@ if (isset($_GET['edit'])) {
             bottom: 0;
         }
 
-        /* Search Form Styles */
+        
         .search-container {
             text-align: center;
             margin-bottom: 20px;
@@ -229,7 +229,7 @@ if (isset($_GET['edit'])) {
             background-color: #218838;
         }
 
-        /* Make the layout responsive */
+       
         @media (max-width: 768px) {
             header nav ul {
                 flex-direction: column;
@@ -258,7 +258,7 @@ if (isset($_GET['edit'])) {
     </header>
 
     <div class="container">
-        <!-- Search Bar -->
+      
         <div class="search-container">
             <form action="manage_transport.php" method="GET">
                 <input type="text" name="search" placeholder="Search by type, name, or route" value="<?php echo htmlspecialchars($search_query); ?>">
@@ -266,11 +266,11 @@ if (isset($_GET['edit'])) {
             </form>
         </div>
 
-        <!-- Transport Form (Create or Update) -->
+        
         <div class="section">
             <h2>Create or Update Transport</h2>
             <form action="manage_transport.php" method="POST">
-                <!-- Hidden input to track transport ID for updating -->
+                
                 <input type="hidden" name="id" value="<?php echo $edit_data ? $edit_data['transport_id'] : ''; ?>">
 
                 <div class="form-group">
@@ -301,14 +301,14 @@ if (isset($_GET['edit'])) {
                     </select>
                 </div>
 
-                <!-- Buttons for Create or Update -->
+               
                 <button type="submit" name="<?php echo $edit_data ? 'update' : 'create'; ?>">
                     <?php echo $edit_data ? 'Update' : 'Create'; ?>
                 </button>
             </form>
         </div>
 
-        <!-- Transport List Table -->
+        
         <div class="section">
             <h2>All Transport Options</h2>
             <table>

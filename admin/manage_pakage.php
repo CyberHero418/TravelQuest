@@ -1,7 +1,7 @@
 <?php
-include 'config.php'; // Include your database connection file
+include 'config.php'; 
 
-// Handle form submission for adding a new package
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $accommodation_id = $_POST['accommodation_id'];
@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $price = $_POST['price'];
     $description = $_POST['description'];
 
-    // Insert the new package into the database
+   
     $query = "INSERT INTO package (name, accommodation_id, tour_id, transport_id, price, description) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("siiids", $name, $accommodation_id, $tour_id, $transport_id, $price, $description);

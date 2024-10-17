@@ -1,8 +1,8 @@
 <?php
 session_start();
-include 'config.php'; // Ensure this file contains your database connection settings
+include 'config.php'; 
 
-// Redirect if not logged in
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Function to validate package by name
+
 function getPackageByName($conn, $packageName) {
     $stmt = $conn->prepare("SELECT * FROM package WHERE name = ?");
     $stmt->bind_param("s", $packageName);
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_booking'])) {
     $booking_date = $_POST['booking_date'];
     $status = $_POST['status'];
 
-    // Get package details by name
+   
     $packageData = getPackageByName($conn, $package_name);
 
     if ($packageData) {
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_booking'])) {
         $transport_id = $packageData['transport_id'];
         $total_price = $packageData['price'];
 
-        // Insert booking using package details
+        
         $stmt = $conn->prepare("INSERT INTO booking (user_id, accommodation_id, tour_id, transport_id, booking_date, total_price, status) 
                                 VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iiissds", $user_id, $accommodation_id, $tour_id, $transport_id, $booking_date, $total_price, $status);
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_booking'])) {
     }
 }
 
-// Fetch existing bookings
+
 $result = $conn->query("SELECT booking_id, accommodation_id, tour_id, transport_id, booking_date, total_price, status 
                         FROM booking WHERE user_id = $user_id");
 ?>
